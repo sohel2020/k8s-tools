@@ -8,7 +8,7 @@ ENV HELM_RELEASE_FILE="helm-v${HELM_VERSION}-linux-amd64.tar.gz"
 ENV HELMFILE_VERSION=0.144.0
 ENV SOPS_VERSION=3.7.2
 ENV HELM_SECRET_VERSION=3.10.0
-RUN apk add --update git openssh openssl ca-certificates curl bash && \
+RUN apk add --update git openssh openssl ca-certificates curl bash gnupg && \
     curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && \
     chmod +x /usr/local/bin/kubectl && \
     curl -L https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${IAM_AUTHENTICATOR_VERSION}/aws-iam-authenticator_${IAM_AUTHENTICATOR_VERSION}_linux_amd64 -o /usr/local/bin/aws-iam-authenticator && \
