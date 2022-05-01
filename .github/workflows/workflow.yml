@@ -1,0 +1,27 @@
+name: build_and_publish
+
+on:
+  push:
+    branches:
+      - "master"
+
+env:
+  TAG: $(echo $GITHUB_SHA | head -c7)
+  IMAGE: sohel2020/k8s-tools
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    name: Docker Build & Push
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+
+      - name: Docker loging
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: Build, tag, and push image to Amazon ECR
+        run: |
+          docker build -t ${{ env.IMAGE }}:${{ env.TAG }} .
+          docker push ${{ env.IMAGE }}:${{ env.TAG }}
+
