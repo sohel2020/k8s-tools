@@ -23,5 +23,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         run: |
           docker build -t ${{ env.IMAGE }}:${{ env.TAG }} .
+          docker tag ${{ env.IMAGE }}:${{ env.TAG }} ${{ env.IMAGE }}:${GITHUB_REF##*/}
           docker push ${{ env.IMAGE }}:${{ env.TAG }}
+          docker push ${{ env.IMAGE }}:${GITHUB_REF##*/}
 
